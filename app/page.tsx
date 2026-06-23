@@ -79,6 +79,7 @@ export default function SurveyPage() {
   const [progress, setProgress] = useState(0)
   const [submitted, setSubmitted] = useState(false)
   const [pending, setPending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     setProgress(calcProgress(e.currentTarget))
@@ -86,6 +87,7 @@ export default function SurveyPage() {
 
   const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError(null)
     const form = e.currentTarget
 
     let valid = true
@@ -110,8 +112,15 @@ export default function SurveyPage() {
 
     setPending(true)
     const fd = new FormData(form)
-    await submitSurvey(fd)
+    const result = await submitSurvey(fd)
     setPending(false)
+
+    if (!result.success) {
+      setError(result.error ?? 'Something went wrong. Check your DATABASE_URL.')
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
@@ -250,6 +259,11 @@ export default function SurveyPage() {
             <p className="submit-note">
               Responses are anonymous and used exclusively to improve Wave. This survey does not collect personal data.
             </p>
+            {error && (
+              <p style={{ fontSize: 13, color: 'var(--signal)', marginBottom: 12, lineHeight: 1.5 }}>
+                {error}
+              </p>
+            )}
             <button type="submit" className="btn-submit" disabled={pending}>
               {pending ? 'Submitting…' : 'Submit Feedback'}
             </button>
