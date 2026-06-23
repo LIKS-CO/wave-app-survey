@@ -59,15 +59,12 @@ function ScaleQuestion({ name, labels }: { name: string; labels: [string, string
 }
 
 function isFieldFilled(name: string, form: HTMLFormElement) {
-  const el = form.elements.namedItem(name) as HTMLSelectElement | HTMLInputElement | HTMLInputElement[] | null
-  if (!el) return false
-  if (el instanceof HTMLSelectElement) return el.value !== ''
-  if (el instanceof HTMLInputElement && el.type === 'radio') {
-    const radios = form.querySelectorAll<HTMLInputElement>(`[name="${name}"]`)
-    return [...radios].some(r => r.checked)
-  }
-  if (el instanceof HTMLInputElement) return el.value !== ''
-  return false
+  const els = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[name="${name}"]`)
+  if (els.length === 0) return false
+  const first = els[0]
+  if (first instanceof HTMLSelectElement) return first.value !== ''
+  if (first.type === 'radio') return [...els].some((el) => (el as HTMLInputElement).checked)
+  return first.value !== ''
 }
 
 function calcProgress(form: HTMLFormElement) {
