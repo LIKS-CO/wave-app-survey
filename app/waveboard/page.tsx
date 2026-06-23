@@ -140,6 +140,7 @@ export default async function WaveboardPage() {
                     <thead>
                       <tr>
                         <th>Date</th>
+                        <th>Name</th>
                         <th>Sport</th>
                         <th>Routine</th>
                         <th>Intensity</th>
@@ -155,6 +156,7 @@ export default async function WaveboardPage() {
                           <td style={{ whiteSpace: 'nowrap', fontSize: 12 }}>
                             {r.created_at ? new Date(r.created_at).toLocaleDateString() : '—'}
                           </td>
+                          <td style={{ fontSize: 12 }}>{r.name || '—'}</td>
                           <td>{r.sport}</td>
                           <td style={{ fontSize: 12 }}>{r.routine}</td>
                           <td style={{ textAlign: 'center' }}>{r.intensity}</td>

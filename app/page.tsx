@@ -128,7 +128,7 @@ export default function SurveyPage() {
         <div className="survey-header">
           <div className="brand-eyebrow">Wave by KOVA</div>
           <div className="survey-title">Session Feedback</div>
-          <div className="survey-subtitle">5 minutes · 10 questions · anonymous</div>
+          <div className="survey-subtitle">5 minutes · 11 questions · anonymous if you skip the name</div>
         </div>
         <div className="form-container">
           <div className="thankyou">
@@ -150,8 +150,8 @@ export default function SurveyPage() {
       <div className="survey-header">
         <div className="brand-eyebrow">Wave by KOVA</div>
         <div className="survey-title">Session Feedback</div>
-        <div className="survey-subtitle">5 minutes · 10 questions · anonymous</div>
-      </div>
+          <div className="survey-subtitle">5 minutes · 11 questions · anonymous if you skip the name</div>
+        </div>
 
       <div className="progress-bar">
         <div className="progress-fill" style={{ width: `${progress}%` }} />
@@ -159,6 +159,18 @@ export default function SurveyPage() {
 
       <div className="form-container">
         <form id="waveForm" onChange={handleChange} onSubmit={handleSubmit}>
+
+          <div className="q-block">
+            <label className="q-label" htmlFor="name">Your name <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span></label>
+            <input
+              type="text"
+              id="name"
+              name="entry.NAME"
+              placeholder="Leave blank to stay anonymous"
+              maxLength={100}
+              autoComplete="name"
+            />
+          </div>
 
           <div className="section-label">The Session</div>
 
@@ -254,7 +266,7 @@ export default function SurveyPage() {
 
           <div className="submit-wrap">
             <p className="submit-note">
-              Responses are anonymous and used exclusively to improve Wave. This survey does not collect personal data.
+              Responses are used exclusively to improve Wave. Share your name only if you want to — otherwise you stay anonymous.
             </p>
             {error && (
               <p style={{ fontSize: 13, color: 'var(--signal)', marginBottom: 12, lineHeight: 1.5 }}>

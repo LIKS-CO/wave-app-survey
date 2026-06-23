@@ -10,6 +10,7 @@ function getPool(): Pool {
 export type SurveyResponse = {
   id?: number
   created_at?: string
+  name: string | null
   sport: string
   routine: string
   intensity: number
@@ -38,10 +39,11 @@ export async function testConnection(): Promise<{ ok: boolean; error?: string }>
 export async function createResponse(data: SurveyResponse) {
   const pool = getPool()
   const result = await pool.query(
-    `INSERT INTO responses (sport, routine, intensity, cues, discomfort, ease, science_clarity, best_feature, likelihood, open_feedback)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    `INSERT INTO responses (name, sport, routine, intensity, cues, discomfort, ease, science_clarity, best_feature, likelihood, open_feedback)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
      RETURNING id`,
     [
+      data.name,
       data.sport,
       data.routine,
       data.intensity,

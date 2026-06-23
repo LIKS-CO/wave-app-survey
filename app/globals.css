@@ -194,6 +194,20 @@ select {
 
 select:focus { outline: none; border-color: var(--vitality); }
 
+/* ── Text Input ── */
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  font-family: var(--font-dm-sans), 'DM Sans', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--text-body);
+}
+
+input[type="text"]:focus { outline: none; border-color: var(--vitality); }
+
 /* ── Check / Radio Groups ── */
 .check-group {
   display: flex;

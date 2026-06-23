@@ -10,6 +10,7 @@ export async function submitSurvey(formData: FormData): Promise<{ success: boole
     const discomfort = formData.getAll('entry.DISCOMFORT') as string[]
 
     await createResponse({
+      name: getStr('entry.NAME'),
       sport: getStr('entry.SPORT')!,
       routine: getStr('entry.ROUTINE')!,
       intensity: getNum('entry.INTENSITY'),
