@@ -60,6 +60,18 @@ export async function createResponse(data: SurveyResponse) {
   return result.rows[0].id as number
 }
 
+export async function deleteResponse(id: number) {
+  const pool = getPool()
+  await pool.query('DELETE FROM responses WHERE id = $1', [id])
+  await pool.end()
+}
+
+export async function deleteAllResponses() {
+  const pool = getPool()
+  await pool.query('DELETE FROM responses')
+  await pool.end()
+}
+
 export async function getStats() {
   const pool = getPool()
 

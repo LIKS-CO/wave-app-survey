@@ -1,4 +1,5 @@
 import { getStats } from '@/lib/db'
+import { DeleteButton, ClearAllButton } from './delete-buttons'
 
 function BarChart({ data, labelKey }: { data: Record<string, string | number>[]; labelKey: string }) {
   const maxCount = Math.max(...data.map((d) => Number(d.count)), 1)
@@ -49,6 +50,11 @@ export default async function WaveboardPage() {
       </div>
 
       <div className="stats-container">
+        {stats && stats.total > 0 && (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 20 }}>
+            <ClearAllButton />
+          </div>
+        )}
         {error ? (
           <div className="stat-card" style={{ textAlign: 'center', padding: '40px' }}>
             <p style={{ color: 'var(--signal)', fontWeight: 500 }}>Could not load data</p>
@@ -148,6 +154,7 @@ export default async function WaveboardPage() {
                         <th>Ease</th>
                         <th>Likelihood</th>
                         <th>Feedback</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -166,6 +173,7 @@ export default async function WaveboardPage() {
                           <td style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 12 }}>
                             {r.open_feedback || '—'}
                           </td>
+                          <td><DeleteButton id={r.id!} /></td>
                         </tr>
                       ))}
                     </tbody>

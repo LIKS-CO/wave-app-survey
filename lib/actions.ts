@@ -1,6 +1,7 @@
 'use server'
 
-import { createResponse } from './db'
+import { revalidatePath } from 'next/cache'
+import { createResponse, deleteResponse, deleteAllResponses } from './db'
 
 export async function submitSurvey(formData: FormData): Promise<{ success: boolean; error?: string }> {
   try {
@@ -26,5 +27,23 @@ export async function submitSurvey(formData: FormData): Promise<{ success: boole
     return { success: true }
   } catch (e) {
     return { success: false, error: e instanceof Error ? e.message : 'Failed to submit response' }
+  }
+}
+
+export async function removeResponse(id: number) {
+  try {
+    await deleteResponse(id)
+    revalidatePath('/waveboard')
+  } catch (e) {
+    throw new Error(e instanceof Error ? e.message : 'Failed to delete response')
+  }
+}
+
+export async function removeAllResponses() {
+  try {
+    await deleteAllResponses()
+    revalidatePath('/waveboard')
+  } catch (e) {
+    throw new Error(e instanceof Error ? e.message : 'Failed to clear responses')
   }
 }
