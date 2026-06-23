@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { submitSurvey } from '@/lib/actions'
 
 const REQUIRED = ['entry.SPORT', 'entry.ROUTINE', 'entry.INTENSITY', 'entry.CUES', 'entry.EASE', 'entry.SCIENCE_CLARITY', 'entry.LIKELIHOOD'] as const
 
 const sports = [
-  'Running', 'Basketball', 'Soccer', 'Tennis / Padel', 'Climbing',
-  'Swimming', 'Cycling', 'Powerlifting / CrossFit', 'Gymnastics',
-  'General strength training', 'Other',
+  'Running', 'Athletics', 'Basketball', 'Soccer', 'Tennis / Padel',
+  'Climbing', 'Swimming', 'Cycling', 'Powerlifting / CrossFit',
+  'Gymnastics', 'General strength training', 'Other',
 ]
 
 const routines = [
@@ -44,15 +44,15 @@ function ScaleQuestion({ name, labels }: { name: string; labels: [string, string
   return (
     <div className="scale-row">
       {[1, 2, 3, 4, 5].map((val) => (
-        <input key={val} type="radio" id={`${name}${val}`} name={name} value={val} required={val === 1} />
-      ))}
-      {[1, 2, 3, 4, 5].map((val) => (
-        <label key={val} htmlFor={`${name}${val}`} className="scale-option">
-          <div className="scale-btn">{val}</div>
-          <div className="scale-caption">
-            {val === 1 ? labels[0] : val === 3 ? labels[1] : val === 5 ? labels[2] : ''}
-          </div>
-        </label>
+        <React.Fragment key={val}>
+          <input type="radio" id={`${name}${val}`} name={name} value={val} required={val === 1} />
+          <label htmlFor={`${name}${val}`} className="scale-option">
+            <div className="scale-btn">{val}</div>
+            <div className="scale-caption">
+              {val === 1 ? labels[0] : val === 3 ? labels[1] : val === 5 ? labels[2] : ''}
+            </div>
+          </label>
+        </React.Fragment>
       ))}
     </div>
   )
